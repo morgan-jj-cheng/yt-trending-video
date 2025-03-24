@@ -146,13 +146,13 @@ with tab2:
     col1, col2, col3 = st.columns(3)
     with col1:
         ttl_video = df_gaming["title"].count()
-        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}", delta="+5%")
+        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}")#, delta="+5%")
     with col2:
         ttl_duration = df_gaming["duration"].sum()
-        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}", delta="-1%")
+        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}")#, delta="-1%")
     with col3: 
         ttl_view = df_gaming["views"].sum()
-        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}", delta="-1%")
+        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}")#, delta="-1%")
 
 
     # line: avg view vs. date
@@ -226,11 +226,6 @@ with tab2:
 
 
     # button 
-    #def click_button_gaming():
-    #    st.session_state.my_button = True
-    # button for detailed nalysis
-    #st.button('Read More', on_click=click_button_gaming, key="button_gaming")
-
     if st.button("Detailed Analysis - Gaming", key="gaming_analysis"):
         reset_all_tabs()
         st.session_state.gaming_button = True
@@ -336,7 +331,10 @@ with tab2:
 
     # table
     if st.session_state.gaming_button:
-        mask = df_gaming["channelName"].isin([options_channel])
+        mask = df_gaming["publishedDate"].between(options_date[0], options_date[1]) &\
+               df_gaming["channelName"].isin([options_channel]) &\
+               df_gaming["views"].between(min_views, max_views) &\
+               df_gaming["duration"].between(min_duration, max_duration)
         df_filtered_4 = df_gaming[mask].drop(columns=["channelName"])
 
         st.subheader('Gaming Dataset')
@@ -375,13 +373,13 @@ with tab3:
     col1, col2, col3 = st.columns(3)
     with col1:
         ttl_video = df_movies["title"].count()
-        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}", delta="+5%")
+        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}")#, delta="+5%")
     with col2:
         ttl_duration = df_movies["duration"].sum()
-        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}", delta="-1%")
+        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}")#, delta="-1%")
     with col3: 
         ttl_view = df_movies["views"].sum()
-        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}", delta="-1%")
+        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}")#, delta="-1%")
 
 
     # line: avg view vs. date
@@ -561,7 +559,10 @@ with tab3:
 
     # table
     if st.session_state.movies_button:
-        mask = df_movies["channelName"].isin([options_channel])
+        mask = df_movies["publishedDate"].between(options_date[0], options_date[1]) &\
+               df_movies["channelName"].isin([options_channel]) &\
+               df_movies["views"].between(min_views, max_views) &\
+               df_movies["duration"].between(min_duration, max_duration)
         df_filtered_4 = df_movies[mask].drop(columns=["channelName"])
 
         st.subheader('Movie Dataset')
@@ -601,13 +602,13 @@ with tab4:
     col1, col2, col3 = st.columns(3)
     with col1:
         ttl_video = df_music["title"].count()
-        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}", delta="+5%")
+        st.metric(label="📹 Total Video Published", value=f"{ttl_video:,}")#, delta="+5%")
     with col2:
         ttl_duration = df_music["duration"].sum()
-        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}", delta="-1%")
+        st.metric(label="⏳ Total Video Duration (second)", value=f"{ttl_duration:,}")#, delta="-1%")
     with col3: 
         ttl_view = df_music["views"].sum()
-        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}", delta="-1%")
+        st.metric(label="👁️ Total Number of Views", value=f"{ttl_view:,}")#, delta="-1%")
 
 
     # line: avg view vs. date
@@ -767,7 +768,6 @@ with tab4:
             st.plotly_chart(g4, use_container_width=True) 
 
     # two small graphs
-    st.markdown("---")
     if st.session_state.music_button:
         col1, col2 = st.columns([3, 2])
         # top 10 video per channel
@@ -791,7 +791,10 @@ with tab4:
 
     # table
     if st.session_state.music_button:
-        mask = df_music["channelName"].isin([options_channel])
+        mask = df_music["publishedDate"].between(options_date[0], options_date[1]) &\
+               df_music["channelName"].isin([options_channel]) &\
+               df_music["views"].between(min_views, max_views) &\
+               df_music["duration"].between(min_duration, max_duration)
         df_filtered_4 = df_music[mask].drop(columns=["channelName"])
 
         st.subheader('Music Dataset')
@@ -823,38 +826,38 @@ with tab5:
     there are several areas for potential improvement to enhance functionality, usability, and analytical depth:
     """)
 
-    st.markdown("#### 1. Incomplete Data Coverage")
+    st.markdown("### 1. Incomplete Data Coverage")
     st.markdown("""
     The dataset retrieved from Kaggle exhibits gaps in its temporal coverage. 
     Some dates are missing, which may affect the accuracy of time-series analysis. 
     Future versions could incorporate a more complete dataset or implement data imputation methods.
     """)
 
-    st.markdown("#### 2. Channel Comparison Functionality")
+    st.markdown("### 2. Channel Comparison Functionality")
     st.markdown("""
     Enable users to select and compare multiple channels within the same time-series chart. 
     This would allow for more intuitive benchmarking of content performance across creators.
     """)
 
-    st.markdown("#### 3. Description-Based Text Analysis")
+    st.markdown("### 3. Description-Based Text Analysis")
     st.markdown("""
     Since the dataset contains video descriptions, a new tab can be introduced for 
     Natural Language Processing (NLP) to extract insights from textual content (e.g., keyword trends, topic modeling).
     """)
 
-    st.markdown("#### 4. Viewer Sentiment Analysis")
+    st.markdown("### 4. Viewer Sentiment Analysis")
     st.markdown("""
     If future datasets include user comments or likes/dislikes, sentiment analysis can be applied 
     to better understand audience reactions and their relationship to video performance.
     """)
 
-    st.markdown("#### 5. Predictive Modeling Capabilities")
+    st.markdown("### 5. Predictive Modeling Capabilities")
     st.markdown("""
     Introduce machine learning models (e.g., regression, classification) to predict video success 
     based on metadata such as publish date, video length, or keywords in the description.
     """)
 
-    st.markdown("#### 6. Sidebar Context Management")
+    st.markdown("### 6. Sidebar Context Management")
     st.markdown("""
     When switching between tabs, the sidebar currently retains filters from previous tabs. 
     Future iterations should dynamically clear or update sidebar components to match the active tab.
