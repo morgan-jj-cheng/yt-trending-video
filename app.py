@@ -32,13 +32,13 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["📑 Introduction", "🎮 Gaming", "�
 #################################################  Sidebar  ###################################################
 # read data
 #df_gaming = pd.read_csv("OneDrive/桌面/python/streamlit_project/pages/data/gaming.csv")
-df_gaming = pd.read_csv("data/gaming.csv")
+df_gaming = pd.read_csv("pages/data/gaming.csv")
 
 #df_movies = pd.read_csv("OneDrive/桌面/python/streamlit_project/pages/data/movies.csv")
-df_movies = pd.read_csv("data/movies.csv")
+df_movies = pd.read_csv("pages/data/movies.csv")
 
 #df_music = pd.read_csv("OneDrive/桌面/python/streamlit_project/pages/data/music.csv")
-df_music = pd.read_csv("data/music.csv")
+df_music = pd.read_csv("pages/data/music.csv")
 
 
 
