@@ -26,14 +26,3 @@ An interactive dashboard for exploring YouTube video trends across **Gaming**, *
 | `views`        | View count                         |
 | `duration`     | Duration in seconds                |
 | `isShort`      | Boolean indicating Shorts video    |
-
----
-
-## 📁 Project Structure
-├── app.py
-├── pages/
-│   └── data/
-│       ├── gaming.csv
-│       ├── movies.csv
-│       └── music.csv
-
